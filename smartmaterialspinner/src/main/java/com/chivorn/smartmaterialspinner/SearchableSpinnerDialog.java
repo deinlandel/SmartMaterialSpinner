@@ -166,7 +166,7 @@ public class SearchableSpinnerDialog extends DialogFragment implements SearchVie
         searchView.setOnCloseListener(this);
         searchView.setFocusable(true);
         searchView.setIconified(false);
-        searchView.requestFocusFromTouch();
+        searchView.clearFocus();
         List items = savedInstanceState != null ? (List) savedInstanceState.getSerializable(INSTANCE_LIST_ITEMS) : null;
         if (items != null) {
             searchArrayAdapter = new ArrayAdapter<Object>(getActivity(), R.layout.smart_material_spinner_search_list_item_layout, items) {
