@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,7 +36,7 @@ public class SearchableSpinnerDialog extends DialogFragment implements SearchVie
     private static final String INSTANCE_LIST_ITEMS = "ListItems";
     private static final String INSTANCE_LISTENER_KEY = "OnSearchDialogEventListener";
     private static final String INSTANCE_SPINNER_KEY = "SmartMaterialSpinner";
-    private ArrayAdapter searchArrayAdapter;
+    private ContainsArrayAdapter searchArrayAdapter;
     private ViewGroup searchHeaderView;
     private AppCompatTextView tvSearchHeader;
     private SearchView searchView;
@@ -169,7 +168,7 @@ public class SearchableSpinnerDialog extends DialogFragment implements SearchVie
         searchView.clearFocus();
         List items = savedInstanceState != null ? (List) savedInstanceState.getSerializable(INSTANCE_LIST_ITEMS) : null;
         if (items != null) {
-            searchArrayAdapter = new ArrayAdapter<Object>(getActivity(), R.layout.smart_material_spinner_search_list_item_layout, items) {
+            searchArrayAdapter = new ContainsArrayAdapter<Object>(getActivity(), R.layout.smart_material_spinner_search_list_item_layout, items) {
                 @NonNull
                 @Override
                 public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -309,9 +308,9 @@ public class SearchableSpinnerDialog extends DialogFragment implements SearchVie
     @Override
     public boolean onQueryTextChange(String s) {
         if (TextUtils.isEmpty(s)) {
-            ((ArrayAdapter) searchListView.getAdapter()).getFilter().filter(null);
+            ((ContainsArrayAdapter) searchListView.getAdapter()).getFilter().filter(null);
         } else {
-            ((ArrayAdapter) searchListView.getAdapter()).getFilter().filter(s);
+            ((ContainsArrayAdapter) searchListView.getAdapter()).getFilter().filter(s);
         }
         if (onSearchTextChanged != null) {
             onSearchTextChanged.onSearchTextChanged(s);
